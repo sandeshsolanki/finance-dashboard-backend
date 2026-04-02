@@ -22,7 +22,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public String login(@RequestBody LoginDTO dto) {
-        System.out.println("LOGIN API HIT"); // ✅ debug log
+        System.out.println("LOGIN API HIT"); // debug log
         return service.login(dto);
     }
 }

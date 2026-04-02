@@ -1,7 +1,5 @@
 package com.finance.finance.dashboard.system.model;
 
-
-
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,8 +17,8 @@ public class FinancialRecord {
     private Long id;
 
     private Double amount;
-    private String type;
-    private String category;
+    private String type;       // income / expense
+    private String category;   // food, rent, etc.
     private LocalDate date;
     private String description;
 

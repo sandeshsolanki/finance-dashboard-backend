@@ -31,12 +31,29 @@ public class SecurityConfig {
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authorizeHttpRequests(auth -> auth
-                        // ✅ Explicitly allow auth APIs
-                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+
+                        // PUBLIC APIs
                         .requestMatchers("/auth/**").permitAll()
 
-                        // ✅ Everything else secured
+                        // VIEWER + ANALYST + ADMIN → dashboard
+                        .requestMatchers("/dashboard/**")
+                        .hasAnyRole("VIEWER", "ANALYST", "ADMIN")
+
+                        //  ANALYST + ADMIN → read records
+                        .requestMatchers(HttpMethod.GET, "/records/**")
+                        .hasAnyRole("ANALYST", "ADMIN")
+
+                        //ADMIN → create/update/delete records
+                        .requestMatchers(HttpMethod.POST, "/records/**")
+                        .hasRole("ADMIN")
+
+                        .requestMatchers(HttpMethod.PUT, "/records/**")
+                        .hasRole("ADMIN")
+
+                        .requestMatchers(HttpMethod.DELETE, "/records/**")
+                        .hasRole("ADMIN")
+
+
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
@@ -44,7 +61,7 @@ public class SecurityConfig {
         return http.build();
     }
 
-    // ✅ Password Encoder Bean
+    // Password Encoder
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

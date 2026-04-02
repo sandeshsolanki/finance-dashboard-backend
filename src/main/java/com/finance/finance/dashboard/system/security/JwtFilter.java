@@ -8,11 +8,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Collections;
+import java.util.List;
 
 @Component
 public class JwtFilter extends OncePerRequestFilter {
@@ -33,7 +34,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
         String path = req.getRequestURI();
 
-        // ✅ Skip auth APIs
+        //  Skip public auth APIs
         if (path.startsWith("/auth")) {
             chain.doFilter(req, res);
             return;
@@ -41,7 +42,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
         String header = req.getHeader("Authorization");
 
-        // ✅ No token → continue (Spring will handle auth)
+        //  If no token → continue (Spring Security will handle)
         if (header == null || !header.startsWith("Bearer ")) {
             chain.doFilter(req, res);
             return;
@@ -49,26 +50,35 @@ public class JwtFilter extends OncePerRequestFilter {
 
         try {
             String token = header.substring(7);
+
+            // Extract email from token
             String email = jwtUtil.extractEmail(token);
 
+            // Fetch user from DB
             User user = repo.findByEmail(email).orElse(null);
 
             if (user != null) {
+
+                // Set ROLE (VERY IMPORTANT)
+                List<SimpleGrantedAuthority> authorities =
+                        List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()));
 
                 UsernamePasswordAuthenticationToken auth =
                         new UsernamePasswordAuthenticationToken(
                                 user,
                                 null,
-                                Collections.emptyList()
+                                authorities
                         );
 
+                //  Set authentication in context
                 SecurityContextHolder.getContext().setAuthentication(auth);
 
-                // ✅ VERY IMPORTANT (for controllers)
+                // Attach user to request (for controllers)
                 req.setAttribute("user", user);
             }
 
         } catch (Exception e) {
+            // Invalid token → clear context
             SecurityContextHolder.clearContext();
         }
 

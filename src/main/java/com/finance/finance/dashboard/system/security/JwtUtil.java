@@ -31,7 +31,7 @@ public class JwtUtil {
                     .signWith(getSigningKey())
                     .compact();
         } catch (Exception e) {
-            e.printStackTrace(); // 🔥 VERY IMPORTANT
+            e.printStackTrace(); //  VERY IMPORTANT
             throw new RuntimeException("JWT Token Generation Failed");
         }
     }
