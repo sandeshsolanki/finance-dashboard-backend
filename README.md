@@ -56,9 +56,13 @@ Role-based authorization using Spring Security
 👤 Roles
 
 Role	Permissions
+
 Viewer	View dashboard data only
+
 Analyst	View records + analytics
+
 Admin	Full access (CRUD + user management)
+
 
 📌 Core Features
 
