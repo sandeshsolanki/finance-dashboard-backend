@@ -29,14 +29,23 @@ API Testing: Postman
 
 com.finance.dashboard.system
 │
+
 ├── config          # Security configurations
+
 ├── controller      # REST API endpoints
+
 ├── dto             # Data Transfer Objects
+
 ├── exception       # Global exception handling
+
 ├── model           # Entity classes
+
 ├── repository      # JPA repositories
+
 ├── security        # JWT + filters
+
 ├── service         # Business logic
+
 
 🔐 Authentication & Authorization
 
