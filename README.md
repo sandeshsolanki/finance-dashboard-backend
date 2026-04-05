@@ -53,17 +53,16 @@ ________________________________________
 
 🔐 Authentication Flow
 
-1.	User registers using /auth/register
-2.	
-3.	User logs in via /auth/login
-4.	
-5.	Server returns a JWT token
-6.	
-7.	Token is used in headers for secured APIs
+1.	User registers using /auth/register 
 
-8.	Authorization: Bearer <JWT_TOKEN>
+2.	User logs in via /auth/login 
 
+3.	Server returns a JWT token 
+
+4.	Token is used in headers for secured APIs 
+Authorization: Bearer <JWT_TOKEN>
 ________________________________________
+
 🌐 API Endpoints
 
 🔑 Auth APIs
