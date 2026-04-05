@@ -128,15 +128,23 @@ ________________________________________
 2️⃣ Configure Database
 
 spring.application.name=finance-dashboard-system
+
 spring.datasource.url=jdbc:mysql://localhost:3306/finance_db
+
 spring.datasource.username=root
+
 spring.datasource.password=
 
+
 spring.jpa.hibernate.ddl-auto=update
+
 spring.jpa.show-sql=true
 
+
 jwt.secret=mysupersecretkeymysupersecretkey12345
+
 jwt.expiration=86400000
+
 ________________________________________
 3️⃣ Run Application
 
