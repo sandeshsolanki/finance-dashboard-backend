@@ -35,6 +35,7 @@ ________________________________________
 📂 Project Structure
 
 finance-dashboard-system
+
 │── controller       # REST Controllers (Auth, Financial Records)
 
 │── service          # Business Logic Layer
@@ -49,3 +50,165 @@ finance-dashboard-system
 
 │── config           # Application Configuration
 ________________________________________
+
+🔐 Authentication Flow
+
+1.	User registers using /auth/register
+2.	
+3.	User logs in via /auth/login
+4.	
+5.	Server returns a JWT token
+6.	
+7.	Token is used in headers for secured APIs
+
+8.	Authorization: Bearer <JWT_TOKEN>
+
+________________________________________
+🌐 API Endpoints
+
+🔑 Auth APIs
+
+Method	Endpoint	Description
+
+POST	/auth/register	Register new user
+
+POST	/auth/login	Login & get JWT
+
+________________________________________
+💰 Financial Record APIs
+
+Method	Endpoint	Description
+
+POST	/records	Create record
+
+GET	/records	Get all records
+
+GET	/records/category/{category}	Filter by category
+
+GET	/records/date	Filter by date range
+
+DELETE	/records/{id}	Delete record
+
+________________________________________
+📦 Sample Request & Response
+
+✅ Register User
+
+POST /auth/register
+{
+  "username": "sandesh",
+  "email": "sandesh@gmail.com",
+  "password": "123456",
+  "role": "USER"
+}
+
+________________________________________
+✅ Login Response
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+________________________________________
+✅ Create Financial Record
+
+POST /records
+{
+  "amount": 5000,
+  "category": "Food",
+  "date": "2026-04-03",
+  "description": "Lunch"
+}
+
+________________________________________
+⚙️ Setup Instructions
+
+1️⃣ Clone Repository
+git clone https://github.com/your-username/finance-dashboard-system.git
+cd finance-dashboard-system
+________________________________________
+2️⃣ Configure Database
+
+Update application.properties:
+spring.datasource.url=jdbc:mysql://localhost:3306/finance_db
+spring.datasource.username=root
+spring.datasource.password=your_password
+
+spring.jpa.hibernate.ddl-auto=update
+________________________________________
+3️⃣ Run Application
+
+mvn spring-boot:run
+App will run at:
+http://localhost:8080
+
+________________________________________
+4️⃣ Test APIs
+
+Use:
+•	Postman 
+•	Swagger (optional if added) 
+
+________________________________________
+🧪 Test Cases
+
+🔐 Authentication
+
+•	Register with valid data ✅ 
+
+•	Register with duplicate email ❌ 
+
+•	Login with correct credentials ✅ 
+
+•	Login with wrong password ❌ 
+
+________________________________________
+💰 Financial Records
+
+•	Create record ✅ 
+
+•	Fetch all records ✅ 
+
+•	Filter by category ✅ 
+
+•	Filter by date range ✅ 
+
+•	Delete record ✅ 
+
+________________________________________
+🔒 Security
+
+•	Access API without token ❌ 
+
+•	Access with invalid token ❌ 
+
+•	Access with valid token ✅ 
+
+________________________________________
+⚠️ Known Improvements
+
+•	Add DTO validation (@Valid, @NotNull) 
+
+•	Implement global exception handling 
+
+•	Add Swagger documentation 
+
+•	Add logging (SLF4J) 
+
+•	Improve response structure using ResponseEntity 
+
+________________________________________
+📈 Future Enhancements
+
+•	📊 Dashboard analytics (monthly summary, charts) 
+
+•	📱 Frontend integration (Angular / React) 
+
+•	☁️ Cloud deployment (AWS / Railway) 
+
+•	📑 Export reports (PDF/Excel) 
+
+________________________________________
+👨‍💻 Author
+
+Sandesh Solanki
+B.Tech CSE | Java Backend Developer
+
